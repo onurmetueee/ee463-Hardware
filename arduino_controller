@@ -1,0 +1,54 @@
+void setup() {
+  Serial.begin(9600);
+  pinMode(Vcontrol, INPUT);
+  pinMode(feedback, INPUT);
+  pinMode(PWM, OUTPUT);  
+  TCCR2B = TCCR2B & B11111000 | B00000001;    // pin 3 and 11 PWM frequency of 31372.55 Hz
+}
+
+void loop() {  
+  int cont = analogRead(Vcontrol);
+  int output  = analogRead(feedback);
+ dummy = pwm;
+
+ 
+     
+    if (output > cont)
+     {
+      if (pwm < 60)
+      {
+     
+     pwm = dummy -0.5;
+     pwm = constrain(pwm, 1, 127);
+      } else
+      {
+       pwm = dummy-1;
+       pwm = constrain(pwm, 1, 127);  
+      }
+      
+    }
+
+    if (cont > output)
+    {
+     if (pwm < 60)
+      {
+     pwm = dummy+0.5;
+
+     pwm = constrain(pwm, 1, 153);
+      } else
+      {
+       pwm = dummy + 1;
+       pwm = constrain(pwm, 1, 153);  
+      }
+    }
+
+
+   analogWrite(PWM,pwm);
+   Serial.print(" PWM = ");
+   Serial.print(pwm);
+   Serial.print(" , Feedbac: ");
+   Serial.print(output);
+   Serial.print(" , control: ");
+   Serial.println(cont);
+  }
+  
